@@ -12,7 +12,7 @@ Output: tail connects to node index 1
 Explanation: There is a cycle in the linked list, where tail connects to the second node.
 ```
 
-[img1](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png)
+![img1](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png)
 
 **Example 2:**
 
@@ -22,7 +22,7 @@ Output: tail connects to node index 0
 Explanation: There is a cycle in the linked list, where tail connects to the first node.
 ```
 
-[img2](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png)
+![img2](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png)
 
 **Example 3:**
 
@@ -32,7 +32,7 @@ Output: no cycle
 Explanation: There is no cycle in the linked list.
 ```
 
-[img3](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png)
+![img3](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test3.png)
 
 **Solution:**
 

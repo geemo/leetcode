@@ -22,7 +22,7 @@ nums2 = [3, 4]
 The median is (2 + 3)/2 = 2.5
 ```
 
-**Solution:**
+**Solutions:**
 
 ```golang
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
@@ -53,5 +53,29 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
   }
 
   return float64(arr[mid])
+}
+```
+
+```golang
+func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
+  m, n := len(nums1), len(nums2)
+  mid := (m + n) / 2
+  left, right := -1, -1
+  i1, i2 := 0, 0
+  for i := 0; i <= mid; i++ {
+    left = right
+    if i1 < m && (i2 >= n || nums1[i1] < nums2[i2]) {
+      right = nums1[i1]
+      i1++
+    } else {
+      right = nums2[i2]
+      i2++
+    }
+  }
+
+  if (m + n) % 2 == 0 {
+    return float64(left + right) / 2.0
+  }
+  return float64(right)
 }
 ```

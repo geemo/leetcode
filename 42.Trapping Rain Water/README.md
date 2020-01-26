@@ -48,3 +48,54 @@ func min(a, b int) int {
 	return b
 }
 ```
+
+```golang
+func trap(heights []int) int {
+  var water, lower, level int
+  var left, right int = 0, len(heights) - 1
+  for left < right {
+    if heights[left] < heights[right] {
+      lower = heights[left]
+      left++
+    } else {
+      lower = heights[right]
+      right--
+    }
+
+    if lower > level {
+      level = lower
+    }
+    water += level - lower
+  }
+  return water
+}
+```
+
+```golang
+func trap(heights []int) int {
+  var stack []int
+  var water int
+  for i := 0; i < len(heights); i++ {
+    for len(stack) > 0 && heights[stack[len(stack) - 1]] < heights[i] {
+      end := len(stack) - 1
+      top := heights[stack[end]]
+			stack = stack[:end]
+			if len(stack) == 0 {
+				break
+			}
+			peek := stack[len(stack)-1]
+			width := i - peek - 1
+			water += (min(heights[peek], heights[i]) - top) * width
+    }
+    stack = append(stack, i)
+  }
+  return water
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+```

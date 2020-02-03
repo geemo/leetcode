@@ -50,3 +50,30 @@ func min(a, b int) int {
     return b
 }
 ```
+
+一维dp
+
+```golang
+func minimumTotal(triangle [][]int) int {
+    n := len(triangle)
+    if n == 0 {
+        return 0
+    }
+
+    dp := triangle[n-1]
+    for i := n - 2; i >= 0; i-- {
+        for j := 0; j < len(triangle[i]); j++ {
+            dp[j] = min(dp[j], dp[j+1]) + triangle[i][j]
+        }
+    }
+
+    return dp[0]
+}
+
+func min(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}
+```

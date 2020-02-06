@@ -63,6 +63,38 @@ func dfs(root *TreeNode, sum int) int {
 }
 ```
 
+bfs
+```golang
+func sumNumbers(root *TreeNode) int {
+  if root == nil {
+    return 0
+  }
+  var ans int
+  queue := []*TreeNode{root}
+  for len(queue) != 0 {
+    node := queue[0]
+    queue = queue[1:]
+
+    if node.Left == nil && node.Right == nil {
+      ans += node.Val
+      continue
+    }
+
+    if node.Left != nil {
+      node.Left.Val += node.Val * 10
+      queue = append(queue, node.Left)
+    }
+
+    if node.Right != nil {
+      node.Right.Val += node.Val * 10
+      queue = append(queue, node.Right)
+    }
+  }
+
+  return ans
+}
+```
+
 dfs stack
 ```golang
 func sumNumbers(root *TreeNode) int {

@@ -55,6 +55,7 @@ func maxProfit(prices []int) int {
 }
 ```
 
+二维dp
 ```golang
 func maxProfit(prices []int) int {
   n := len(prices)
@@ -77,5 +78,42 @@ func max(a, b int) int {
     return a
   }
   return b
+}
+```
+
+一维dp
+```golang
+func maxProfit(prices []int) int {
+  n := len(prices)
+  if n <= 1 {
+    return 0
+  }
+
+  dp_i_0, dp_i_1 := 0, -prices[0]
+  for i := 1; i < n; i++ {
+    dp_i_0 = max(dp_i_0, dp_i_1 + prices[i])
+    dp_i_1 = max(dp_i_1, dp_i_0 - prices[i])
+  }
+  return dp_i_0
+}
+
+func max(a, b int) int {
+  if a > b {
+    return a
+  }
+  return b
+}
+```
+
+贪心
+```golang
+func maxProfit(prices []int) int {
+  var ans int
+  for i := 1; i < len(prices); i++ {
+    if prices[i-1] < prices[i] {
+      ans += prices[i] - prices[i-1]
+    }
+  }
+  return ans
 }
 ```

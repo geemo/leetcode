@@ -51,3 +51,29 @@ func max(a, b int) int {
 	return b
 }
 ```
+
+binary search
+
+```golang
+func lengthOfLIS(nums []int) int {
+	var piles int
+	top := make([]int, len(nums))
+	for _, pocker := range nums {
+		left, right := 0, piles
+		for left < right {
+			mid := left + (right - left) / 2
+			if top[mid] >= pocker {
+				right = mid
+			} else {
+				left = mid + 1
+			}
+		}
+		if left == piles {
+			piles++
+		}
+		top[left] = pocker
+	}
+
+	return piles
+}
+```

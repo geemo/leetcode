@@ -35,15 +35,47 @@ A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
 
 **Solution:**
 
+recursion
+
+```golang
+import "fmt"
+func maxA(N int) int {
+  m := make(map[string]int)
+  var dp func(an, cn, n int) int
+  dp = func(an, cn, n int) int {
+    key := fmt.Sprintf("%d,%d,%d", an, cn, n)
+    if v, ok := m[key]; ok {
+      return v
+    }
+    if n <= 0 {
+      return an
+    }
+
+    m[key] = max(dp(an+1, cn, n-1), max(dp(an+cn, cn, n-1), dp(an, an, n-2)))
+    return m[key]
+  }
+
+  return dp(0, 0, N)
+}
+
+func max(a, b int) int {
+  if a > b {
+    return a
+  }
+  return b
+}
+```
+
+dp
+
 ```golang
 func maxA(N int) int {
-  dp := make([]int, N + 1)
+  dp := make([]int, N+1)
   dp[0] = 0
-
   for i := 1; i <= N; i++ {
-    dp[i] = dp[i - 1] + 1
+    dp[i] = dp[i-1] + 1
     for j := 2; j < i; j++ {
-      dp[i] = max(dp[i], dp[j - 2] * (i - j + 1))
+      dp[i] = max(dp[i], dp[j-2] * (i-j+1))
     }
   }
   return dp[N]

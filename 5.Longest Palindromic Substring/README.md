@@ -17,6 +17,8 @@ Output: "bb"
 
 **Solution:**
 
+dp
+
 ```golang
 func longestPalindrome(s string) string {
   sLen := len(s)
@@ -44,5 +46,72 @@ func longestPalindrome(s string) string {
   }
 
   return longestPalindStr
+}
+```
+
+dp optimize
+
+```golang
+func longestPalindrome(s string) string {
+  n := len(s)
+  if n == 0 {
+    return ""
+  }
+
+  dp := make([][]bool, n)
+  for i := range dp {
+    dp[i] = make([]bool, n)
+    dp[i][i] = true
+  }
+
+  var l, r int
+  for k := 1; k < n; k++ {
+    i, j := 0, k
+    for i < n && j < n {
+      if s[i] == s[j] && (j-i <= 2 || dp[i+1][j-1]) {
+        dp[i][j] = true
+        if j-i > r-l {
+          l, r = i, j
+        }
+      }
+      i++
+      j++
+    }
+  }
+
+  return s[l:r+1]
+}
+```
+
+two pointers
+
+```golang
+func longestPalindrome(s string) string {
+  n := len(s)
+  if n == 0 {
+    return ""
+  }
+
+  var lps func(l, r int) string
+  lps = func(l, r int) string {
+    for l >= 0 && r < n && s[l] == s[r] {
+      l--
+      r++
+    }
+    return s[l+1:r]
+  }
+
+  var ans string
+  for i := 0; i < n; i++ {
+    s1, s2 := lps(i, i), lps(i, i+1)
+    if len(s1) > len(ans) {
+      ans = s1
+    }
+    if len(s2) > len(ans) {
+      ans = s2
+    }
+  }
+
+  return ans
 }
 ```

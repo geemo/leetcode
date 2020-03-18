@@ -36,3 +36,35 @@ func countNodes(root *TreeNode) int {
   return 1 + countNodes(root.Left) + countNodes(root.Right)
 }
 ```
+
+```golang
+func countNodes(root *TreeNode) int {
+  var l, r *TreeNode = root, root
+  var hl, hr int
+
+  for l != nil {
+    hl++
+    l = l.Left
+  }
+
+  for r != nil {
+    hr++
+    r = r.Right
+  }
+
+  if hl == hr {
+    return pow(2, hl) - 1
+  }
+
+  return countNodes(root.Left) + countNodes(root.Right) + 1
+}
+
+func pow(a, b int) int {
+  ans := 1
+  for ; b > 0; b-- {
+    ans *= a
+  }
+
+  return ans
+}
+```

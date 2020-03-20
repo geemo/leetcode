@@ -115,3 +115,40 @@ func longestPalindrome(s string) string {
   return ans
 }
 ```
+
+```golang
+func longestPalindrome(s string) string {
+  n := len(s)
+  if n == 0 {
+    return ""
+  }
+
+  var lps func(l, r int) int
+  lps = func(l, r int) int {
+    for l >= 0 && r < n && s[l] == s[r] {
+      l--
+      r++
+    }
+    return r - l - 1
+  }
+
+  si, ei := 0, 0
+  for i := 0; i < n; i++ {
+    l1, l2 := lps(i, i), lps(i, i + 1)
+    l := max(l1, l2)
+    if l > (ei - si + 1) {
+      si = i - (l - 1) / 2
+      ei = i + l / 2
+    }
+  }
+
+  return s[si:ei+1]
+}
+
+func max(a, b int) int {
+  if a > b {
+    return a
+  }
+  return b
+}
+```

@@ -52,27 +52,26 @@ Explanation: The number "-91283472332" is out of the range of a 32-bit signed in
 
 ```golang
 func myAtoi(str string) int {
-  slen := len(str)
-  if slen == 0 {
+  n := len(str)
+  if n == 0 {
     return 0
   }
 
-  i := 0
-  for i < slen && str[i] == ' ' {
+  var i int
+  for i < n && str[i] == ' ' {
     i++
   }
+
   sign, base := 1, 0
-  if i < slen {
-    if str[i] == '+' || str[i] == '-' {
-      if str[i] == '-' {
-        sign = -1
-      }
-      i++
+  if i < n && (str[i] == '+' || str[i] == '-') {
+    if str[i] == '-' {
+      sign = -1
     }
+    i++
   }
 
   MAX_INT, MIN_INT := 1 << 31 - 1, -1 << 31
-  for i < slen && str[i] >= '0' && str[i] <= '9' {
+  for ; i < n && str[i] >= '0' && str[i] <= '9'; i++ {
     num := int(str[i] - '0')
     if base > MAX_INT / 10 || (base == MAX_INT / 10 && num > 7) {
       if sign == 1 {
@@ -81,7 +80,6 @@ func myAtoi(str string) int {
       return MIN_INT
     }
     base = base * 10 + num
-    i++
   }
 
   return sign * base

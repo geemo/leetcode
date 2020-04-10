@@ -93,3 +93,28 @@ func reverse(arr []uint8, l, r int) {
   }
 }
 ```
+
+```golang
+import (
+  "bytes"
+)
+
+func reverseWords(s string) string {
+  ns := bytes.TrimSpace([]byte(s))
+  n := len(ns)
+  i, j := n - 1, n - 1
+  var ans [][]byte
+  for i >= 0 {
+    for i >= 0 && ns[i] != ' ' {
+      i--
+    }
+    ans = append(ans, ns[i+1:j+1])
+    for i >= 0 && ns[i] == ' ' {
+      i--
+    }
+    j = i
+  }
+
+  return string(bytes.Join(ans, []byte(" ")))
+}
+```

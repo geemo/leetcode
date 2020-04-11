@@ -56,3 +56,52 @@ func superEggDrop(K int, N int) int {
   return m
 }
 ```
+
+```golang
+func superEggDrop(K, N int) int {
+  MIN_INT, MAX_INT := -1 << 31, 1 << 31 - 1
+  memo := make([][]int, K + 1)
+  for i := range memo {
+    memo[i] = make([]int, N + 1)
+    for j := range memo[i] {
+      memo[i][j] = MIN_INT
+    }
+  }
+  
+  var dp func(K, N int) int
+  dp = func(K, N int) int {
+    if K == 1 {
+      return N
+    }
+    if N == 0 {
+      return 0
+    }
+    if memo[K][N] != MIN_INT {
+      return memo[K][N]
+    }
+    res := MAX_INT
+    for i := 1; i <= N; i++ {
+      res = min(res, max(dp(K, N - i), dp(K - 1, i - 1)) + 1)
+    }
+
+    memo[K][N] = res
+    return res
+  }
+  
+  return dp(K, N)
+}
+
+func min(a, b int) int {
+  if a < b {
+    return a
+  }
+  return b
+}
+
+func max(a, b int) int {
+  if a > b {
+    return a
+  }
+  return b
+}
+```

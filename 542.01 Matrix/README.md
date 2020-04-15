@@ -91,3 +91,43 @@ func intMax(row, col int) int {
   return col*2
 }
 ```
+
+```golang
+func updateMatrix(matrix [][]int) [][]int {
+  m := len(matrix)
+  if m == 0 {
+    return nil
+  }
+  n := len(matrix[0])
+  if n == 0 {
+    return nil
+  }
+
+  var queue [][2]int
+  for i := 0; i < m; i++ {
+    for j := 0; j < n; j++ {
+      if matrix[i][j] == 0 {
+        queue = append(queue, [2]int{i, j})
+      } else {
+        matrix[i][j] = -1
+      }
+    }
+  }
+
+  dirs := [4][2]int{[2]int{-1, 0}, [2]int{1, 0}, [2]int{0, -1}, [2]int{0, 1}}
+  for len(queue) != 0 {
+    r, c := queue[0][0], queue[0][1]
+    queue = queue[1:]
+
+    for _, d := range dirs {
+      nr, nc := r + d[0], c + d[1]
+      if nr >= 0 && nr < m && nc >= 0 && nc < n && matrix[nr][nc] == -1 {
+        matrix[nr][nc] = matrix[r][c] + 1
+        queue = append(queue, [2]int{nr, nc})
+      }
+    }
+  }
+
+  return matrix
+}
+```

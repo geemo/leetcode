@@ -65,3 +65,33 @@ func max(a, b int) int {
   return b
 }
 ```
+
+```golang
+import "sort"
+
+func merge(intervals [][]int) [][]int {
+  n := len(intervals)
+  if n == 0 {
+    return nil
+  }
+
+  sort.Slice(intervals, func(i, j int) bool {
+    return intervals[i][0] < intervals[j][0]
+  })
+
+  ans := [][]int{intervals[0]}
+  for i := 1; i < n; i++ {
+    last := ans[len(ans) - 1]
+    curr := intervals[i]
+    if curr[0] <= last[1] {
+      if curr[1] > last[1] {
+        last[1] = curr[1]
+      }
+    } else {
+      ans = append(ans, curr)
+    }
+  }
+
+  return ans
+}
+```

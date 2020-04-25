@@ -44,3 +44,31 @@ func permute(nums []int) [][]int {
   return ans
 }
 ```
+
+```golang
+func permute(nums []int) [][]int {
+  n := len(nums)
+  var ans [][]int
+  isVisited := make([]bool, n)
+  var backtrack func(res []int, idx int)
+  backtrack = func(res []int, idx int) {
+    if idx == n {
+      _res := make([]int, n)
+      copy(_res, res)
+      ans = append(ans, _res)
+      return
+    }
+
+    for i := 0; i < n; i++ {
+      if !isVisited[i] {
+        isVisited[i] = true
+        res[idx] = nums[i]
+        backtrack(res, idx + 1)
+        isVisited[i] = false
+      }
+    }
+  }
+  backtrack(make([]int, n), 0)
+  return ans
+}
+```
